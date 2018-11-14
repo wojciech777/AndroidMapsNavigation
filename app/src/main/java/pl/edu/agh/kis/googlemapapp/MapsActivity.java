@@ -1,37 +1,27 @@
 package pl.edu.agh.kis.googlemapapp;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+
+import java.sql.Driver;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMyLocationButtonClickListener
 {
 
     private GoogleMap mMap;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    int PERMISSIONS_REQUEST_LOCATION_FINE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
 
     /**
      * Manipulates the map once available.
@@ -66,39 +52,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         LatLng wellington = new LatLng(-41, 174);
         mMap.addMarker(new MarkerOptions().position(wellington).title("Marker in Wellington"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,10), 5000, null);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        if (isGrantedLocationPermission()) {
+            configureMyLocation();
         } else {
-            mMap.setMyLocationEnabled(true);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSIONS_REQUEST_LOCATION_FINE);
         }
-        mMap.setOnMyLocationButtonClickListener(this);
-
-        /*for (int i = 0 ; i< 1; ++i){
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            Toast.makeText(getApplicationContext(),"dwa",Toast.LENGTH_SHORT);
-
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(wellington));
-            Toast.makeText(getApplicationContext(),"trzy",Toast.LENGTH_SHORT);
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSIONS_REQUEST_LOCATION_FINE && isGrantedLocationPermission()) {
+            configureMyLocation();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    void configureMyLocation() {
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMyLocationButtonClickListener(this);
+    }
+
+    boolean isGrantedLocationPermission() {
+        int fineLocationPermission = ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        int coarseLocationPermission = ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        return (fineLocationPermission == PackageManager.PERMISSION_GRANTED
+                && coarseLocationPermission == PackageManager.PERMISSION_GRANTED);
+    }
 
     @Override
     public boolean onMyLocationButtonClick() {
