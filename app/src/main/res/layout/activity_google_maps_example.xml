@@ -1,6 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/addressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/address"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/addressEditTextXml"
+        app:layout_constraintStart_toStartOf="@id/addressEditTextXml"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addressEditTextXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="@string/address"
+        android:inputType="text"
+        android:text="@string/agh_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressLabel"
+        tools:ignore="LabelFor,UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/longitudeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/longitude"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/latitudeLabel"
+        app:layout_constraintStart_toStartOf="@id/addressEditTextXml"
+        app:layout_constraintTop_toBottomOf="@id/addressEditTextXml" />
+
+    <EditText
+        android:id="@+id/longitudeEditTextXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/longitude"
+        android:inputType="text"
+        android:text="@string/longitudeExample"
+        app:layout_constraintEnd_toEndOf="@id/longitudeLabel"
+        app:layout_constraintStart_toStartOf="@id/longitudeLabel"
+        app:layout_constraintTop_toBottomOf="@id/longitudeLabel"
+        tools:ignore="LabelFor,UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/latitudeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/latitude"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/addressEditTextXml"
+        app:layout_constraintStart_toEndOf="@id/longitudeLabel"
+        app:layout_constraintTop_toBottomOf="@id/addressEditTextXml" />
+
+    <EditText
+        android:id="@+id/latitudeEditTextXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/latitude"
+        android:inputType="text"
+        android:text="@string/latitudeExample"
+        app:layout_constraintEnd_toEndOf="@id/latitudeLabel"
+        app:layout_constraintStart_toStartOf="@id/latitudeLabel"
+        app:layout_constraintTop_toBottomOf="@id/latitudeLabel"
+        tools:ignore="LabelFor,UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/modeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/mode"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/longitudeEditTextXml"
+        app:layout_constraintStart_toStartOf="@id/longitudeEditTextXml"
+        app:layout_constraintTop_toBottomOf="@id/longitudeEditTextXml" />
+
+    <RadioGroup
+        android:id="@+id/radioButtonsModeGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/modeLabel"
+        app:layout_constraintStart_toStartOf="@id/modeLabel"
+        app:layout_constraintTop_toBottomOf="@id/modeLabel">
+
+        <RadioButton
+            android:id="@+id/drivingRadioButtonXml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/driving" />
+
+        <RadioButton
+            android:id="@+id/walkingRadioButtonXml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/walking" />
+
+        <RadioButton
+            android:id="@+id/bicyclingRadioButtonXml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/bicycling" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/avoidLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/avoid"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/latitudeEditTextXml"
+        app:layout_constraintStart_toStartOf="@id/latitudeEditTextXml"
+        app:layout_constraintTop_toBottomOf="@id/latitudeEditTextXml" />
+
+    <CheckBox
+        android:id="@+id/tollsCheckBoxXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tolls"
+        app:layout_constraintEnd_toEndOf="@id/avoidLabel"
+        app:layout_constraintStart_toStartOf="@id/avoidLabel"
+        app:layout_constraintTop_toBottomOf="@id/avoidLabel" />
+
+    <CheckBox
+        android:id="@+id/highwaysCheckBoxXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/highways"
+        app:layout_constraintEnd_toEndOf="@id/avoidLabel"
+        app:layout_constraintStart_toStartOf="@id/avoidLabel"
+        app:layout_constraintTop_toBottomOf="@id/tollsCheckBoxXml" />
+
+    <CheckBox
+        android:id="@+id/ferriesCheckBoxXml"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/ferries"
+        app:layout_constraintEnd_toEndOf="@id/avoidLabel"
+        app:layout_constraintStart_toStartOf="@id/avoidLabel"
+        app:layout_constraintTop_toBottomOf="@id/highwaysCheckBoxXml" />
+
+    <Button
+        android:id="@+id/navigateAddressButtonXml"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/navigateByAddress"
+        app:layout_constraintEnd_toEndOf="@id/modeLabel"
+        app:layout_constraintStart_toStartOf="@id/modeLabel"
+        app:layout_constraintTop_toBottomOf="@id/radioButtonsModeGroup" />
+
+    <Button
+        android:id="@+id/navigateCoordinatesButtonXml"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/navigateByCoordinates"
+        app:layout_constraintEnd_toEndOf="@id/avoidLabel"
+        app:layout_constraintStart_toStartOf="@id/avoidLabel"
+        app:layout_constraintTop_toBottomOf="@id/ferriesCheckBoxXml" />
 
 </android.support.constraint.ConstraintLayout>

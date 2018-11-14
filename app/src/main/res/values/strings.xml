@@ -4,4 +4,20 @@
     <string name="google_maps_intent_navigation">Google Maps Intent Navigation</string>
     <string name="mapbox_navigation">Mapbox Navigation</string>
     <string name="android_maps_example">Android Maps Example</string>
+    <string name="agh_address">aleja Adama Mickiewicza 30, 30-059 Kraków</string>
+    <string name="address">Address</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitudeExample">19.944981</string>
+    <string name="latitudeExample">50.064651</string>
+    <string name="driving">Driving</string>
+    <string name="walking">Walking</string>
+    <string name="bicycling">Bicycling</string>
+    <string name="tolls">Tolls</string>
+    <string name="highways">Highways</string>
+    <string name="ferries">Ferries</string>
+    <string name="mode">Model</string>
+    <string name="avoid">Avoid</string>
+    <string name="navigateByAddress">Navigate By Address</string>
+    <string name="navigateByCoordinates">navigate By Coordinates</string>
 </resources>
