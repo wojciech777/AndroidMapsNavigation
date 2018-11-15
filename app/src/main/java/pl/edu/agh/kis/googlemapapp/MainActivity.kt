@@ -17,9 +17,9 @@ class MainActivity: FragmentActivity() {
         get() = googleMapsIntentButtonXml
     private val mapboxNavigationButton: Button
         get() = mapboxNavigationButtonXml
-    /** MARK: - Activity Lifecycle */
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
     override fun onStart() {
@@ -34,7 +34,7 @@ class MainActivity: FragmentActivity() {
         startActivityByClass(GoogleMapsIntentExampleActivity::class.java)
     }
     private fun mapboxNavigationButtonAction() {
-
+        startActivityByClass(MapboxNavigationExampleActivity::class.java)
     }
     /** MARK: - Private Configuration Methods */
     private fun configureButtonActions() {

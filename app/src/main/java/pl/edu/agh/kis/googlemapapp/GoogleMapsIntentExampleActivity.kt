@@ -65,9 +65,8 @@ class GoogleMapsIntentExampleActivity: FragmentActivity() {
     private val uriBase: String = "google.navigation:q="
     private var modeType: ModeType = ModeType.Driving
     private var avoidType: MutableMap<AvoidType, Boolean> = mutableMapOf()
-    /** MARK: - Activity Lifecycle */
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_maps_example)
     }
     override fun onStart() {

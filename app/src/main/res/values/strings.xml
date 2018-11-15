@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">GoogleMapApp</string>
+    <string name="access_token" translatable="false">pk.eyJ1IjoiYnloa2Fsby1rb25zdGFudHluIiwiYSI6ImNqb2dncG91NzBld2kzcXBqaWNneWRoNmEifQ.VWZOhnAW9hcX8Mqy07jKzA</string>
+    <string name="user_location_permission_explanation">This app needs location permissions in order to show its functionality.</string>
+    <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
     <string name="title_activity_maps">Map</string>
     <string name="google_maps_intent_navigation">Google Maps Intent Navigation</string>
     <string name="mapbox_navigation">Mapbox Navigation</string>
     <string name="android_maps_example">Android Maps Example</string>
-    <string name="agh_address">aleja Adama Mickiewicza 30, 30-059 Kraków</string>
+    <string name="agh_address">aleja Adama Mickiewicza 30, 30–059 Kraków</string>
     <string name="address">Address</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
@@ -20,4 +23,5 @@
     <string name="avoid">Avoid</string>
     <string name="navigateByAddress">Navigate By Address</string>
     <string name="navigateByCoordinates">navigate By Coordinates</string>
+    <string name="start_navigation_button">Start navigation</string>
 </resources>
