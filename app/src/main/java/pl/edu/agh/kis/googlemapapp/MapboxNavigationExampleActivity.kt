@@ -11,6 +11,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.android.core.permissions.PermissionsManager
 import android.widget.Toast
+import com.mapbox.android.core.location.LocationEngineListener
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.mapboxsdk.annotations.Marker
 import com.mapbox.mapboxsdk.annotations.MarkerOptions
@@ -29,7 +30,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
+class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, PermissionsListener,
+        MapboxMap.OnMapClickListener, LocationEngineListener {
     /** MARK: - Properties */
     /** Adding location layer properties */
     private lateinit var mapboxMap: MapboxMap
@@ -49,6 +51,8 @@ class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, P
         get() = mapboxViewXml
     private val startNavigationButton: Button
         get() = startNavigationButtonXml
+    /** Listener flags properties */
+    private var isSetMapClickListener = false
     /** MARK: - Activity Lifecycle */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,8 +116,6 @@ class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, P
             locationComponent.isLocationComponentEnabled = true
             // Set the component's camera mode
             locationComponent.cameraMode = CameraMode.TRACKING
-            originLocation = locationComponent.lastKnownLocation
-
         } else {
             permissionsManager = PermissionsManager(this)
             permissionsManager.requestLocationPermissions(this)
@@ -162,16 +164,28 @@ class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, P
             finish()
         }
     }
+    /** MARK: - LocationEngineListener */
+    override fun onLocationChanged(location: Location?) {
+        if (location != null) {
+            originLocation = location
+            // Origin Location configuring
+            originLocation?.let {
+                originCoordinate = LatLng(it.latitude, it.longitude)
+                if (!isSetMapClickListener) {
+                    isSetMapClickListener = true
+                    mapboxMap.addOnMapClickListener(this)
+                }
+            }
+        }
+    }
+
+    override fun onConnected() {}
     /** MARK: - OnMapReadyCallback */
     override fun onMapReady(mapboxMap: MapboxMap?) {
         if (mapboxMap != null) else { return }
         this.mapboxMap = mapboxMap
         enableLocationComponent()
-        // Origin Location configuring
-        originLocation?.let {
-            originCoordinate = LatLng(it.latitude, it.longitude)
-            this.mapboxMap.addOnMapClickListener(this)
-        }
+        mapboxMap.locationComponent.locationEngine?.addLocationEngineListener(this)
     }
     /** MARK: - MapboxMap.OnMapClickListener */
     override fun onMapClick(clickCoorditate: LatLng) {
