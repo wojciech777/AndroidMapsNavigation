@@ -123,23 +123,19 @@ class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, P
     }
     /** MARK: - Get Route Methods */
     private fun getRoute(origin: Point, destination: Point) {
-        NavigationRoute.builder(this)
-                .accessToken(Mapbox.getAccessToken()!!)
-                .origin(origin)
-                .destination(destination)
-                .build()
+        NavigationRoute.builder(this).accessToken(Mapbox.getAccessToken()!!)
+                .origin(origin).destination(destination).build()
                 .getRoute(object : Callback<DirectionsResponse> {
                     override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                         // You can get the generic HTTP info about the response
                         val responseBody = response.body() ?: return
-                        if (responseBody.routes().size >= 1) else return
+                        if (responseBody.routes().isNotEmpty()) else return
                         currentRoute = responseBody.routes().first()
                         // Draw the route on the map
                         if (navigationMapRoute == null) {
                             navigationMapRoute = NavigationMapRoute(null, mapView, mapboxMap, R.style.NavigationMapRoute)
-                        } else {
-                            navigationMapRoute?.removeRoute()
                         }
+                        navigationMapRoute?.removeRoute()
                         navigationMapRoute?.addRoute(currentRoute)
                         // Activate start navigation button
                         startNavigationButton.isEnabled = true
@@ -166,16 +162,13 @@ class MapboxNavigationExampleActivity: FragmentActivity(), OnMapReadyCallback, P
     }
     /** MARK: - LocationEngineListener */
     override fun onLocationChanged(location: Location?) {
-        if (location != null) {
-            originLocation = location
-            // Origin Location configuring
-            originLocation?.let {
-                originCoordinate = LatLng(it.latitude, it.longitude)
-                if (!isSetMapClickListener) {
-                    isSetMapClickListener = true
-                    mapboxMap.addOnMapClickListener(this)
-                }
-            }
+        if (location != null) else return
+        originLocation = location
+        // Origin Location configuring
+        originCoordinate = LatLng(location.latitude, location.longitude)
+        if (!isSetMapClickListener) {
+            isSetMapClickListener = true
+            mapboxMap.addOnMapClickListener(this)
         }
     }
 
